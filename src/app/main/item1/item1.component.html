@@ -1,0 +1,12 @@
+<section class="item1">
+  <app-filter (filterTextChange)="onFilterChange($event)"></app-filter>
+
+  <div class="loading" *ngIf="isLoading()">Loading countries...</div>
+  <div class="error" *ngIf="error()">{{ error() }}</div>
+
+  <ul *ngIf="!error()">
+    <li *ngFor="let country of filteredCountries | async">
+      <h4>{{ country.name.common }}</h4>
+    </li>
+  </ul>
+</section>

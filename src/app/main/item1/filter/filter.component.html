@@ -1,0 +1,6 @@
+<div class="filter-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Filter by title</mat-label>
+    <input #filterInput matInput (input)="onFilterChange(filterInput.value)" />
+  </mat-form-field>
+</div>
