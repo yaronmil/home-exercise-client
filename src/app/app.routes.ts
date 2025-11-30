@@ -6,6 +6,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: '',
-    loadChildren: () => import('./main/main.routes').then((m) => m.mainRoutes),
+    loadChildren: () =>
+      import('./main/main-layout.routes').then((m) => m.mainRoutes),
   },
 ];

@@ -1,6 +1,9 @@
 .board-container {
-  padding: 20px;
   width: 100%;
+  padding: 10px;
+  height: calc(100vh - 74px);
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 .cards-grid {
@@ -13,7 +16,6 @@
 .board-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &:hover {
@@ -21,9 +23,35 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
+  mat-card-content {
+    flex-grow: 1;
+  }
+
+  mat-card-actions {
+    margin-top: auto;
+  }
+
   img {
     width: 100%;
     height: 200px;
     object-fit: cover;
+  }
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px !important;
+  margin: 0 !important;
+  min-height: 48px;
+
+  button {
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
   }
 }

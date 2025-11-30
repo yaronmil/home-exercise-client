@@ -14,11 +14,7 @@ export const mainRoutes: Routes = [
         loadComponent: () =>
           import('./item1/item1.component').then((m) => m.Item1Component),
       },
-      {
-        path: 'item2',
-        loadComponent: () =>
-          import('./item2.component').then((m) => m.Item2Component),
-      },
+
       {
         path: 'board',
         loadComponent: () =>

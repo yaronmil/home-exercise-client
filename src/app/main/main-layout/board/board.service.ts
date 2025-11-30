@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BoardCard } from './board.component';
+import { Post } from './board.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService {
-  private cards: BoardCard[] = [
+  private posts: Post[] = [
     {
       id: 1,
       title: 'Mountain Adventure',
@@ -15,6 +15,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=1',
       author: 'John Smith',
       date: '2024-01-15',
+      ownerId: 1,
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=2',
       author: 'Sarah Johnson',
       date: '2024-01-18',
+      ownerId: 2,
     },
     {
       id: 3,
@@ -35,6 +37,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=3',
       author: 'Michael Brown',
       date: '2024-01-20',
+      ownerId: 1,
     },
     {
       id: 4,
@@ -45,6 +48,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=4',
       author: 'Emily Davis',
       date: '2024-01-22',
+      ownerId: 2,
     },
     {
       id: 5,
@@ -55,6 +59,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=5',
       author: 'David Wilson',
       date: '2024-01-25',
+      ownerId: 1,
     },
     {
       id: 6,
@@ -65,6 +70,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=6',
       author: 'Lisa Anderson',
       date: '2024-01-28',
+      ownerId: 2,
     },
     {
       id: 7,
@@ -75,6 +81,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=7',
       author: 'James Martinez',
       date: '2024-02-01',
+      ownerId: 1,
     },
     {
       id: 8,
@@ -85,6 +92,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=8',
       author: 'Jennifer Taylor',
       date: '2024-02-05',
+      ownerId: 2,
     },
     {
       id: 9,
@@ -95,6 +103,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=9',
       author: 'Robert Garcia',
       date: '2024-02-08',
+      ownerId: 1,
     },
     {
       id: 10,
@@ -105,6 +114,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=10',
       author: 'Maria Rodriguez',
       date: '2024-02-12',
+      ownerId: 2,
     },
     {
       id: 11,
@@ -115,6 +125,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=11',
       author: 'Christopher Lee',
       date: '2024-02-15',
+      ownerId: 1,
     },
     {
       id: 12,
@@ -125,6 +136,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=12',
       author: 'Amanda White',
       date: '2024-02-18',
+      ownerId: 2,
     },
     {
       id: 13,
@@ -135,6 +147,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=13',
       author: 'Daniel Harris',
       date: '2024-02-22',
+      ownerId: 1,
     },
     {
       id: 14,
@@ -145,6 +158,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=14',
       author: 'Jessica Clark',
       date: '2024-02-25',
+      ownerId: 2,
     },
     {
       id: 15,
@@ -155,6 +169,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=15',
       author: 'Matthew Lewis',
       date: '2024-02-28',
+      ownerId: 1,
     },
     {
       id: 16,
@@ -165,6 +180,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=16',
       author: 'Olivia Walker',
       date: '2024-03-03',
+      ownerId: 2,
     },
     {
       id: 17,
@@ -175,6 +191,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=17',
       author: 'William Hall',
       date: '2024-03-07',
+      ownerId: 1,
     },
     {
       id: 18,
@@ -185,6 +202,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=18',
       author: 'Sophia Allen',
       date: '2024-03-10',
+      ownerId: 2,
     },
     {
       id: 19,
@@ -195,6 +213,7 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=19',
       author: 'Benjamin Young',
       date: '2024-03-14',
+      ownerId: 1,
     },
     {
       id: 20,
@@ -205,12 +224,42 @@ export class BoardService {
       imageUrl: 'https://picsum.photos/400/300?random=20',
       author: 'Isabella King',
       date: '2024-03-18',
+      ownerId: 2,
     },
   ];
 
-  constructor() {}
+  private cities: { name: string; lat: number; lng: number }[] = [
+    { name: 'Tel Aviv, Israel', lat: 32.0853, lng: 34.7818 },
+    { name: 'Jerusalem, Israel', lat: 31.7683, lng: 35.2137 },
+    { name: 'Haifa, Israel', lat: 32.794, lng: 34.9896 },
+    { name: 'New York, USA', lat: 40.7128, lng: -74.006 },
+    { name: 'London, UK', lat: 51.5074, lng: -0.1278 },
+    { name: 'Paris, France', lat: 48.8566, lng: 2.3522 },
+    { name: 'Berlin, Germany', lat: 52.52, lng: 13.405 },
+    { name: 'Tokyo, Japan', lat: 35.6762, lng: 139.6503 },
+    { name: 'Sydney, Australia', lat: -33.8688, lng: 151.2093 },
+    { name: 'Toronto, Canada', lat: 43.6532, lng: -79.3832 },
+  ];
 
-  getCards(): BoardCard[] {
-    return this.cards;
+  constructor() {
+    // Assign a random city to posts without a location
+    this.posts = this.posts.map((p) =>
+      p.location
+        ? p
+        : {
+            ...p,
+            location: this.randomCity(),
+          }
+    );
+  }
+
+  private randomCity(): { lat: number; lng: number; name: string } {
+    const idx = Math.floor(Math.random() * this.cities.length);
+    const c = this.cities[idx];
+    return { lat: c.lat, lng: c.lng, name: c.name };
+  }
+
+  getPosts(): Post[] {
+    return this.posts;
   }
 }
