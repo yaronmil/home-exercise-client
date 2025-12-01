@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Post } from './board.component';
+import { Post, PostType } from './board.component';
 
 @Injectable({
   providedIn: 'root',
@@ -228,6 +228,8 @@ export class BoardService {
     },
   ];
 
+  private postTypes: PostType[] = ['rent', 'buy & sell', 'events', 'travel'];
+
   private cities: { name: string; lat: number; lng: number }[] = [
     { name: 'Tel Aviv, Israel', lat: 32.0853, lng: 34.7818 },
     { name: 'Jerusalem, Israel', lat: 31.7683, lng: 35.2137 },
@@ -242,21 +244,23 @@ export class BoardService {
   ];
 
   constructor() {
-    // Assign a random city to posts without a location
-    this.posts = this.posts.map((p) =>
-      p.location
-        ? p
-        : {
-            ...p,
-            location: this.randomCity(),
-          }
-    );
+    // Assign a random city and type to posts
+    this.posts = this.posts.map((p) => ({
+      ...p,
+      location: p.location || this.randomCity(),
+      type: p.type || this.randomType(),
+    }));
   }
 
   private randomCity(): { lat: number; lng: number; name: string } {
     const idx = Math.floor(Math.random() * this.cities.length);
     const c = this.cities[idx];
     return { lat: c.lat, lng: c.lng, name: c.name };
+  }
+
+  private randomType(): PostType {
+    const idx = Math.floor(Math.random() * this.postTypes.length);
+    return this.postTypes[idx];
   }
 
   getPosts(): Post[] {

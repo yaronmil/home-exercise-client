@@ -6,21 +6,28 @@
       matInput
       type="text"
       placeholder="Search location"
+      [matAutocomplete]="auto"
+      (input)="onInput($any($event.target).value)"
       (keyup.enter)="onManualEnter()"
       aria-label="Search location"
     />
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="radius-field">
-    <mat-select
-      [value]="radius"
-      (selectionChange)="onRadiusChange($event.value)"
+    <button
+      *ngIf="searchValue"
+      mat-icon-button
+      matSuffix
+      (click)="clearSearch()"
+      aria-label="Clear search"
     >
-      <mat-option [value]="50">50 km</mat-option>
-      <mat-option [value]="100">100 km</mat-option>
-      <mat-option [value]="250">250 km</mat-option>
-      <mat-option [value]="500">500 km</mat-option>
-      <mat-option [value]="1000">1000 km</mat-option>
-    </mat-select>
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="optionSelected($event.option.value)"
+    >
+      <mat-option *ngFor="let p of predictions" [value]="p">
+        {{ p.display_name }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 </div>

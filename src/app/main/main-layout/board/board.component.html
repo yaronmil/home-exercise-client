@@ -1,8 +1,24 @@
 <div class="board-container">
-  <app-location-search
-    (locationSelected)="onLocationSelected($event)"
-    (radiusChanged)="onRadiusChanged($event)"
-  ></app-location-search>
+  <div
+    class="filters-container"
+    style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center"
+  >
+    <app-location-search
+      (locationSelected)="onLocationSelected($event)"
+      style="width: 300px"
+    ></app-location-search>
+
+    <mat-form-field appearance="outline" style="width: 200px">
+      <mat-label>Post Type</mat-label>
+      <mat-select [(value)]="selectedType" (selectionChange)="onTypeChange()">
+        <mat-option value="all">All Types</mat-option>
+        <mat-option *ngFor="let type of postTypes" [value]="type">{{
+          type
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="cards-grid">
     <mat-card *ngFor="let card of displayedPosts" class="board-card">
       <mat-card-header>
@@ -15,6 +31,21 @@
         <p class="card-meta">
           <span class="author">By {{ card.author }}</span>
           <span class="date">{{ card.date }}</span>
+        </p>
+        <p class="card-meta" *ngIf="card.type">
+          <span class="type">
+            <mat-icon
+              style="
+                vertical-align: middle;
+                font-size: 18px;
+                height: 18px;
+                width: 18px;
+                margin-right: 4px;
+              "
+              >category</mat-icon
+            >
+            {{ card.type }}
+          </span>
         </p>
         <p class="card-meta" *ngIf="card.location">
           <span class="location">

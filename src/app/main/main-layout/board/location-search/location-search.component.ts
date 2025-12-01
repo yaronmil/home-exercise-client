@@ -11,12 +11,30 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClient } from '@angular/common/http';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  Subject,
+  switchMap,
+} from 'rxjs';
 
-declare global {
-  interface Window {
-    google?: any;
-  }
+interface NominatimResult {
+  place_id: number;
+  display_name: string;
+  lat: string;
+  lon: string;
+  address?: {
+    road?: string;
+    house_number?: string;
+    city?: string;
+    town?: string;
+    village?: string;
+    country?: string;
+  };
 }
 
 @Component({
@@ -27,7 +45,8 @@ declare global {
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSelectModule,
+    MatAutocompleteModule,
+    MatButtonModule,
   ],
   templateUrl: './location-search.component.html',
   styleUrls: ['./location-search.component.scss'],
@@ -39,52 +58,94 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     lat: number;
     lng: number;
     name: string;
+    address?: {
+      country?: string;
+      city?: string;
+      street?: string;
+    };
   }>();
-  @Output() radiusChanged = new EventEmitter<number>();
 
-  radius = 500; // km
-  private autocomplete?: any;
-  private listener?: any;
+  predictions: NominatimResult[] = [];
+  searchValue: string = '';
+  private searchSubject = new Subject<string>();
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.initAutocomplete();
+    // Debounce search input to avoid too many API calls
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => this.searchNominatim(query))
+      )
+      .subscribe((results) => {
+        this.predictions = results;
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.listener) this.listener.remove();
+    this.searchSubject.complete();
   }
 
-  private initAutocomplete(): void {
-    if (window.google?.maps?.places) {
-      this.autocomplete = new window.google.maps.places.Autocomplete(
-        this.searchInput.nativeElement,
-        {
-          fields: ['geometry', 'name', 'formatted_address'],
-        }
-      );
-      this.listener = this.autocomplete.addListener('place_changed', () => {
-        const place = this.autocomplete!.getPlace();
-        const loc = place.geometry?.location;
-        if (loc) {
-          this.locationSelected.emit({
-            lat: loc.lat(),
-            lng: loc.lng(),
-            name: place.formatted_address || place.name || 'Selected location',
-          });
-        }
-      });
+  private searchNominatim(query: string) {
+    if (!query || query.length < 3) {
+      return of([]);
     }
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      query
+    )}&limit=5&addressdetails=1`;
+    return this.http.get<NominatimResult[]>(url);
+  }
+
+  onInput(value: string): void {
+    this.searchValue = value;
+    this.searchSubject.next(value);
+  }
+
+  optionSelected(result: NominatimResult): void {
+    const addressData = this.extractAddress(result);
+
+    this.locationSelected.emit({
+      lat: parseFloat(result.lat),
+      lng: parseFloat(result.lon),
+      name: result.display_name,
+      address: addressData,
+    });
+  }
+
+  private extractAddress(result: NominatimResult): {
+    country?: string;
+    city?: string;
+    street?: string;
+  } {
+    if (!result.address) {
+      return {};
+    }
+
+    return {
+      country: result.address.country,
+      city:
+        result.address.city || result.address.town || result.address.village,
+      street: result.address.road,
+    };
+  }
+
+  displayFn(result: NominatimResult | null): string {
+    return result ? result.display_name : '';
   }
 
   onManualEnter(): void {
-    // Fallback: if user presses Enter and no Google script, open Maps search
+    // Fallback: if user presses Enter and no API results
     const value = this.searchInput.nativeElement.value.trim();
     if (!value) return;
     this.locationSelected.emit({ lat: NaN, lng: NaN, name: value });
   }
 
-  onRadiusChange(value: number): void {
-    this.radius = value;
-    this.radiusChanged.emit(this.radius);
+  clearSearch(): void {
+    this.searchValue = '';
+    this.searchInput.nativeElement.value = '';
+    this.predictions = [];
+    this.locationSelected.emit({ lat: NaN, lng: NaN, name: '' });
   }
 }

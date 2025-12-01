@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BoardService } from './board.service';
 import { EditCardDialogComponent } from './edit-card-dialog/edit-card-dialog.component';
 import { UserService } from '../../../services/user.service';
 import { LocationSearchComponent } from './location-search/location-search.component';
+
+export type PostType = 'rent' | 'buy & sell' | 'events' | 'travel';
 
 export interface Post {
   id: number;
@@ -18,6 +22,7 @@ export interface Post {
   author: string;
   date: string;
   ownerId: number;
+  type?: PostType;
   location?: {
     lat: number;
     lng: number;
@@ -33,6 +38,8 @@ export interface Post {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
     MatDialogModule,
     LocationSearchComponent,
   ],
@@ -43,6 +50,14 @@ export class BoardComponent implements OnInit {
   posts: Post[] = [];
   displayedPosts: Post[] = [];
   currentUserId: number = 1;
+  selectedType: PostType | 'all' = 'all';
+  postTypes: PostType[] = ['rent', 'buy & sell', 'events', 'travel'];
+  private selectedLocation?: {
+    lat: number;
+    lng: number;
+    name: string;
+    address?: { country?: string; city?: string; street?: string };
+  };
 
   constructor(
     private boardService: BoardService,
@@ -64,57 +79,106 @@ export class BoardComponent implements OnInit {
     return post.ownerId === this.currentUserId;
   }
 
-  onLocationSelected(loc: { lat: number; lng: number; name: string }): void {
-    // If no coordinates (fallback), filter by name substring match
-    if (Number.isNaN(loc.lat) || Number.isNaN(loc.lng)) {
-      this.displayedPosts = this.posts.filter((p) =>
-        (p.location?.name || '').toLowerCase().includes(loc.name.toLowerCase())
-      );
-      return;
+  onLocationSelected(loc: {
+    lat: number;
+    lng: number;
+    name: string;
+    address?: {
+      country?: string;
+      city?: string;
+      street?: string;
+    };
+  }): void {
+    this.selectedLocation = loc;
+    this.applyFilters();
+  }
+
+  onTypeChange(): void {
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    let filtered = this.posts;
+
+    // Filter by location
+    if (
+      this.selectedLocation &&
+      !Number.isNaN(this.selectedLocation.lat) &&
+      !Number.isNaN(this.selectedLocation.lng) &&
+      this.selectedLocation.address
+    ) {
+      filtered = filtered.filter((p) => {
+        if (!p.location) return false;
+
+        const postAddress = this.parsePostLocation(p.location.name);
+
+        // If street is selected, match by street and city
+        if (this.selectedLocation!.address!.street) {
+          return (
+            this.matchString(
+              postAddress.street,
+              this.selectedLocation!.address!.street
+            ) &&
+            this.matchString(
+              postAddress.city,
+              this.selectedLocation!.address!.city
+            )
+          );
+        }
+
+        // If city is selected, match by city and country
+        if (this.selectedLocation!.address!.city) {
+          return (
+            this.matchString(
+              postAddress.city,
+              this.selectedLocation!.address!.city
+            ) &&
+            this.matchString(
+              postAddress.country,
+              this.selectedLocation!.address!.country
+            )
+          );
+        }
+
+        // If only country is selected, match by country
+        if (this.selectedLocation!.address!.country) {
+          return this.matchString(
+            postAddress.country,
+            this.selectedLocation!.address!.country
+          );
+        }
+
+        return false;
+      });
     }
-    this._lastSearchPoint = loc;
-    this.applyGeoFilter();
-  }
 
-  onRadiusChanged(km: number): void {
-    this._radiusKm = km;
-    this.applyGeoFilter();
-  }
-
-  private _lastSearchPoint?: { lat: number; lng: number; name: string };
-  private _radiusKm = 500;
-
-  private applyGeoFilter(): void {
-    if (!this._lastSearchPoint) {
-      this.displayedPosts = this.posts;
-      return;
+    // Filter by type
+    if (this.selectedType !== 'all') {
+      filtered = filtered.filter((p) => p.type === this.selectedType);
     }
-    const { lat, lng } = this._lastSearchPoint;
-    this.displayedPosts = this.posts.filter((p) => {
-      if (!p.location) return false;
-      const d = this.haversineKm(lat, lng, p.location.lat, p.location.lng);
-      return d <= this._radiusKm;
-    });
+
+    this.displayedPosts = filtered;
   }
 
-  private haversineKm(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-    const toRad = (x: number) => (x * Math.PI) / 180;
-    const R = 6371; // Earth radius km
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
+  private parsePostLocation(locationName: string): {
+    street: string;
+    city: string;
+    country: string;
+  } {
+    const parts = locationName.split(',').map((p) => p.trim());
+    return {
+      street: parts[0] || '',
+      city: parts.length > 1 ? parts[parts.length - 2] : '',
+      country: parts.length > 0 ? parts[parts.length - 1] : '',
+    };
+  }
+
+  private matchString(
+    str1: string | undefined,
+    str2: string | undefined
+  ): boolean {
+    if (!str1 || !str2) return false;
+    return str1.toLowerCase() === str2.toLowerCase();
   }
 
   encodeUri(value: string): string {
