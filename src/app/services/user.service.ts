@@ -10,26 +10,27 @@ export interface User {
   providedIn: 'root',
 })
 export class UserService {
-  private users: User[] = [
+  private preDefinedUsers: User[] = [
     { userId: 1, name: 'Yaron' },
     { userId: 2, name: 'Irit' },
   ];
 
-  private selectedUserSubject = new BehaviorSubject<User>(this.users[0]);
-  public selectedUser$: Observable<User> =
-    this.selectedUserSubject.asObservable();
-
+  private currentLoggedInUserSubject = new BehaviorSubject<User>(
+    this.preDefinedUsers[0]
+  );
+  public currentLoggedInUser$: Observable<User> =
+    this.currentLoggedInUserSubject.asObservable();
   constructor() {}
 
   getUsers(): User[] {
-    return this.users;
+    return this.preDefinedUsers;
   }
 
-  getSelectedUser(): User {
-    return this.selectedUserSubject.value;
+  getCurrentLoggedInUser(): User {
+    return this.currentLoggedInUserSubject.value;
   }
 
-  setSelectedUser(user: User): void {
-    this.selectedUserSubject.next(user);
+  setCurrentLoggedInUser(user: User): void {
+    this.currentLoggedInUserSubject.next(user);
   }
 }

@@ -55,14 +55,9 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   @ViewChild('searchInput', { static: true })
   searchInput!: ElementRef<HTMLInputElement>;
   @Output() locationSelected = new EventEmitter<{
-    lat: number;
-    lng: number;
-    name: string;
-    address?: {
-      country?: string;
-      city?: string;
-      street?: string;
-    };
+    country?: string;
+    city?: string;
+    street?: string;
   }>();
 
   predictions: NominatimResult[] = [];
@@ -105,13 +100,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
   optionSelected(result: NominatimResult): void {
     const addressData = this.extractAddress(result);
-
-    this.locationSelected.emit({
-      lat: parseFloat(result.lat),
-      lng: parseFloat(result.lon),
-      name: result.display_name,
-      address: addressData,
-    });
+    this.locationSelected.emit(addressData);
   }
 
   private extractAddress(result: NominatimResult): {
@@ -135,17 +124,10 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     return result ? result.display_name : '';
   }
 
-  onManualEnter(): void {
-    // Fallback: if user presses Enter and no API results
-    const value = this.searchInput.nativeElement.value.trim();
-    if (!value) return;
-    this.locationSelected.emit({ lat: NaN, lng: NaN, name: value });
-  }
-
   clearSearch(): void {
     this.searchValue = '';
     this.searchInput.nativeElement.value = '';
     this.predictions = [];
-    this.locationSelected.emit({ lat: NaN, lng: NaN, name: '' });
+    this.locationSelected.emit({});
   }
 }

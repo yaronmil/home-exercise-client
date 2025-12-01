@@ -1,0 +1,19 @@
+<div
+  class="filters-container"
+  style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center"
+>
+  <app-location-search
+    (locationSelected)="onLocationSelected($event)"
+    style="width: 300px"
+  ></app-location-search>
+
+  <mat-form-field appearance="outline" style="width: 200px">
+    <mat-label>Post Type</mat-label>
+    <mat-select (selectionChange)="onTypeChange($event.value)">
+      <mat-option value="all">All Types</mat-option>
+      <mat-option *ngFor="let type of postTypes" [value]="type">{{
+        type
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

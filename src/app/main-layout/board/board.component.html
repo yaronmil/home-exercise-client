@@ -1,23 +1,9 @@
 <div class="board-container">
-  <div
-    class="filters-container"
-    style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center"
-  >
-    <app-location-search
-      (locationSelected)="onLocationSelected($event)"
-      style="width: 300px"
-    ></app-location-search>
-
-    <mat-form-field appearance="outline" style="width: 200px">
-      <mat-label>Post Type</mat-label>
-      <mat-select [(value)]="selectedType" (selectionChange)="onTypeChange()">
-        <mat-option value="all">All Types</mat-option>
-        <mat-option *ngFor="let type of postTypes" [value]="type">{{
-          type
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <app-create-post></app-create-post>
+  <app-post-search
+    (locationSelected)="onLocationSelected($event)"
+    (typeChanged)="onTypeChange($event)"
+  ></app-post-search>
 
   <div class="cards-grid">
     <mat-card *ngFor="let card of displayedPosts" class="board-card">
@@ -28,7 +14,7 @@
       <img mat-card-image [src]="card.imageUrl" [alt]="card.title" />
       <mat-card-content>
         <p>{{ card.content }}</p>
-        <p class="card-meta" *ngIf="card.type">
+        <p class="card-meta" *ngIf="card.postType">
           <span class="type">
             <mat-icon
               style="
@@ -40,7 +26,7 @@
               "
               >category</mat-icon
             >
-            {{ card.type }}
+            {{ card.postType }}
           </span>
         </p>
         <p class="card-meta" *ngIf="card.location">
@@ -48,11 +34,11 @@
             <a
               [href]="
                 'https://www.google.com/maps/search/?api=1&query=' +
-                encodeUri(card.location!.name)
+                encodeUri(card.location)
               "
               target="_blank"
               rel="noopener"
-              >{{ card.location!.name }}</a
+              >{{ card.location }}</a
             >
           </span>
         </p>

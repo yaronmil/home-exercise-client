@@ -8,14 +8,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BoardService } from './board.service';
 import { EditCardDialogComponent } from './edit-card-dialog/edit-card-dialog.component';
-import { UserService } from '../../../services/user.service';
-import { LocationSearchComponent } from './location-search/location-search.component';
+import { UserService } from '../../services/user.service';
+import { LocationSearchComponent } from './post-search/location-search/location-search.component';
 import { PostSearchComponent } from './post-search/post-search.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 export type PostType = 'Rent' | 'Buy & Sell' | 'Events' | 'Travel';
 
 export interface Post {
-  id: number;
+  id?: number;
   title: string;
   subtitle: string;
   content: string;
@@ -37,6 +38,7 @@ export interface Post {
     MatFormFieldModule,
     MatDialogModule,
     PostSearchComponent,
+    CreatePostComponent,
   ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
@@ -65,7 +67,7 @@ export class BoardComponent implements OnInit {
     });
     this.currentUserId = this.userService.getCurrentLoggedInUser().userId;
 
-    this.userService.selectedUser$.subscribe((user) => {
+    this.userService.currentLoggedInUser$.subscribe((user) => {
       this.currentUserId = user.userId;
     });
   }

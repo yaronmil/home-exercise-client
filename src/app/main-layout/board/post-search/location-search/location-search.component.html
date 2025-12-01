@@ -8,7 +8,6 @@
       placeholder="Search location"
       [matAutocomplete]="auto"
       (input)="onInput($any($event.target).value)"
-      (keyup.enter)="onManualEnter()"
       aria-label="Search location"
     />
     <button

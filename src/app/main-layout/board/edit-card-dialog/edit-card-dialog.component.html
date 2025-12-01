@@ -29,7 +29,7 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Post Type</mat-label>
-      <mat-select formControlName="type">
+      <mat-select formControlName="postType">
         <mat-option *ngFor="let type of postTypes" [value]="type">{{
           type
         }}</mat-option>
@@ -62,7 +62,7 @@
           "
           >place</mat-icon
         >
-        {{ selectedLocation.name }}
+        {{ selectedLocation }}
       </div>
     </div>
   </form>

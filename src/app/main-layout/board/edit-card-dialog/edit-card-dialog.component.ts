@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Post, PostType } from '../board.component';
-import { LocationSearchComponent } from '../location-search/location-search.component';
+import { LocationSearchComponent } from '../post-search/location-search/location-search.component';
 
 @Component({
   selector: 'app-edit-card-dialog',
@@ -38,7 +38,7 @@ import { LocationSearchComponent } from '../location-search/location-search.comp
 })
 export class EditCardDialogComponent implements OnInit {
   editForm: FormGroup;
-  selectedLocation?: { lat: number; lng: number; name: string };
+  selectedLocation?: string;
   postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
 
   constructor(
@@ -54,25 +54,29 @@ export class EditCardDialogComponent implements OnInit {
       content: [data.card.content],
       imageUrl: [data.card.imageUrl],
       ownerId: [data.card.ownerId],
-      type: [data.card.type],
+      postType: [data.card.postType],
       location: [data.card.location],
     });
   }
 
   ngOnInit(): void {}
 
-  onLocationSelected(loc: {
-    lat: number;
-    lng: number;
-    name: string;
-    address?: { country?: string; city?: string; street?: string };
+  onLocationSelected(address: {
+    country?: string;
+    city?: string;
+    street?: string;
   }): void {
-    if (!loc.name) {
+    if (!address || Object.keys(address).length === 0) {
       // Clear location
       this.selectedLocation = undefined;
       this.editForm.patchValue({ location: undefined });
     } else {
-      this.selectedLocation = { lat: loc.lat, lng: loc.lng, name: loc.name };
+      // Build location string from address components
+      const parts = [];
+      if (address.street) parts.push(address.street);
+      if (address.city) parts.push(address.city);
+      if (address.country) parts.push(address.country);
+      this.selectedLocation = parts.join(', ');
       this.editForm.patchValue({ location: this.selectedLocation });
     }
   }

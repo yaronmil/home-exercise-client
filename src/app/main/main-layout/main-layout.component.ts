@@ -35,7 +35,7 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.users = this.userService.getUsers();
-    this.selectedUser = this.userService.getSelectedUser();
+    this.selectedUser = this.userService.getCurrentLoggedInUser();
   }
 
   onUserChange(user: User): void {
@@ -49,8 +49,6 @@ export class MainLayoutComponent implements OnInit {
       subtitle: '',
       content: '',
       imageUrl: '',
-      author: '',
-      date: new Date().toISOString().split('T')[0],
       ownerId: 1,
     };
 

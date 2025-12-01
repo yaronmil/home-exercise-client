@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.title {
+  font-weight: 600;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+a.active-link {
+  background: rgba(255, 255, 255, 0.15);
+}
+.content {
+  height: calc(100vh - 64px);
+}

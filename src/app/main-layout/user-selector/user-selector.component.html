@@ -1,0 +1,16 @@
+<mat-form-field appearance="outline" floatLabel="always" class="user-select">
+  <mat-icon matPrefix>person</mat-icon>
+  <mat-select
+    aria-label="Select user"
+    [(value)]="selectedUser"
+    (selectionChange)="onUserChange($event.value)"
+    disableRipple
+  >
+    <mat-select-trigger>
+      {{ selectedUser.name }}
+    </mat-select-trigger>
+    <mat-option *ngFor="let user of users" [value]="user">
+      {{ user.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Post, PostType } from './board.component';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,9 @@ export class BoardService {
       content:
         'Discover breathtaking views and challenging trails in the heart of the mountains.',
       imageUrl: 'https://picsum.photos/400/300?random=1',
-      author: 'John Smith',
-      date: '2024-01-15',
       ownerId: 1,
+      postType: 'Rent',
+      location: 'Tel Aviv, Israel',
     },
     {
       id: 2,
@@ -24,9 +25,9 @@ export class BoardService {
       content:
         'Experience the tranquility of pristine beaches and crystal-clear waters.',
       imageUrl: 'https://picsum.photos/400/300?random=2',
-      author: 'Sarah Johnson',
-      date: '2024-01-18',
       ownerId: 2,
+      postType: 'Buy & Sell',
+      location: 'Jerusalem, Israel',
     },
     {
       id: 3,
@@ -35,9 +36,9 @@ export class BoardService {
       content:
         'Navigate through bustling streets and discover hidden gems in the urban jungle.',
       imageUrl: 'https://picsum.photos/400/300?random=3',
-      author: 'Michael Brown',
-      date: '2024-01-20',
       ownerId: 1,
+      postType: 'Events',
+      location: 'New York, United States',
     },
     {
       id: 4,
@@ -46,9 +47,9 @@ export class BoardService {
       content:
         'Immerse yourself in the peaceful embrace of ancient woodlands and wildlife.',
       imageUrl: 'https://picsum.photos/400/300?random=4',
-      author: 'Emily Davis',
-      date: '2024-01-22',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'London, UK',
     },
     {
       id: 5,
@@ -57,9 +58,9 @@ export class BoardService {
       content:
         'Journey through endless dunes and witness spectacular sunsets in the desert.',
       imageUrl: 'https://picsum.photos/400/300?random=5',
-      author: 'David Wilson',
-      date: '2024-01-25',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Paris, France',
     },
     {
       id: 6,
@@ -68,9 +69,9 @@ export class BoardService {
       content:
         'Marvel at the stunning ice formations and northern lights in the polar regions.',
       imageUrl: 'https://picsum.photos/400/300?random=6',
-      author: 'Lisa Anderson',
-      date: '2024-01-28',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Berlin, Germany',
     },
     {
       id: 7,
@@ -79,9 +80,9 @@ export class BoardService {
       content:
         'Relax in a lush tropical environment with exotic flora and fauna.',
       imageUrl: 'https://picsum.photos/400/300?random=7',
-      author: 'James Martinez',
-      date: '2024-02-01',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Tokyo, Japan',
     },
     {
       id: 8,
@@ -90,9 +91,9 @@ export class BoardService {
       content:
         'Step back in time and explore magnificent archaeological wonders.',
       imageUrl: 'https://picsum.photos/400/300?random=8',
-      author: 'Jennifer Taylor',
-      date: '2024-02-05',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Sydney, Australia',
     },
     {
       id: 9,
@@ -101,9 +102,9 @@ export class BoardService {
       content:
         'Witness majestic animals in their natural habitat across vast savannas.',
       imageUrl: 'https://picsum.photos/400/300?random=9',
-      author: 'Robert Garcia',
-      date: '2024-02-08',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Toronto, Canada',
     },
     {
       id: 10,
@@ -112,9 +113,9 @@ export class BoardService {
       content:
         'Experience the simple beauty of pastoral landscapes and peaceful villages.',
       imageUrl: 'https://picsum.photos/400/300?random=10',
-      author: 'Maria Rodriguez',
-      date: '2024-02-12',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Tel Aviv, Israel',
     },
     {
       id: 11,
@@ -123,9 +124,9 @@ export class BoardService {
       content:
         "Feel the power and majesty of nature's most spectacular waterfalls.",
       imageUrl: 'https://picsum.photos/400/300?random=11',
-      author: 'Christopher Lee',
-      date: '2024-02-15',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Jerusalem, Israel',
     },
     {
       id: 12,
@@ -134,9 +135,9 @@ export class BoardService {
       content:
         'Descend into dramatic canyons carved by millions of years of erosion.',
       imageUrl: 'https://picsum.photos/400/300?random=12',
-      author: 'Amanda White',
-      date: '2024-02-18',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Haifa, Israel',
     },
     {
       id: 13,
@@ -145,9 +146,9 @@ export class BoardService {
       content:
         'Find tranquility by the still waters of mountain lakes and reflective surfaces.',
       imageUrl: 'https://picsum.photos/400/300?random=13',
-      author: 'Daniel Harris',
-      date: '2024-02-22',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'New York, United States',
     },
     {
       id: 14,
@@ -156,9 +157,9 @@ export class BoardService {
       content:
         'Discover the raw power of active volcanoes and geothermal wonders.',
       imageUrl: 'https://picsum.photos/400/300?random=14',
-      author: 'Jessica Clark',
-      date: '2024-02-25',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'London, UK',
     },
     {
       id: 15,
@@ -167,9 +168,9 @@ export class BoardService {
       content:
         'Explore hidden caverns filled with stunning stalactites and stalagmites.',
       imageUrl: 'https://picsum.photos/400/300?random=15',
-      author: 'Matthew Lewis',
-      date: '2024-02-28',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Paris, France',
     },
     {
       id: 16,
@@ -178,9 +179,9 @@ export class BoardService {
       content:
         'Navigate winding rivers through diverse landscapes and ecosystems.',
       imageUrl: 'https://picsum.photos/400/300?random=16',
-      author: 'Olivia Walker',
-      date: '2024-03-03',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Berlin, Germany',
     },
     {
       id: 17,
@@ -189,9 +190,9 @@ export class BoardService {
       content:
         'Reach new heights and experience the thrill of high-altitude adventures.',
       imageUrl: 'https://picsum.photos/400/300?random=17',
-      author: 'William Hall',
-      date: '2024-03-07',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Tokyo, Japan',
     },
     {
       id: 18,
@@ -200,9 +201,9 @@ export class BoardService {
       content:
         "Wander through colorful gardens showcasing nature's most beautiful blooms.",
       imageUrl: 'https://picsum.photos/400/300?random=18',
-      author: 'Sophia Allen',
-      date: '2024-03-10',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Sydney, Australia',
     },
     {
       id: 19,
@@ -211,9 +212,9 @@ export class BoardService {
       content:
         'Visit historic lighthouses standing sentinel over rocky coastlines.',
       imageUrl: 'https://picsum.photos/400/300?random=19',
-      author: 'Benjamin Young',
-      date: '2024-03-14',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Toronto, Canada',
     },
     {
       id: 20,
@@ -222,9 +223,9 @@ export class BoardService {
       content:
         'Gaze at the cosmos from dark sky locations perfect for stargazing.',
       imageUrl: 'https://picsum.photos/400/300?random=20',
-      author: 'Isabella King',
-      date: '2024-03-18',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Tel Aviv, Israel',
     },
     {
       id: 21,
@@ -233,9 +234,9 @@ export class BoardService {
       content:
         'Hit the slopes and enjoy world-class skiing in pristine mountain resorts.',
       imageUrl: 'https://picsum.photos/400/300?random=21',
-      author: 'Thomas Anderson',
-      date: '2024-03-22',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Jerusalem, Israel',
     },
     {
       id: 22,
@@ -244,9 +245,9 @@ export class BoardService {
       content:
         'Experience vibrant cultural festivals showcasing local traditions and heritage.',
       imageUrl: 'https://picsum.photos/400/300?random=22',
-      author: 'Emma Wilson',
-      date: '2024-03-25',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Haifa, Israel',
     },
     {
       id: 23,
@@ -255,9 +256,9 @@ export class BoardService {
       content:
         'Explore scenic vineyards and taste exquisite wines in rolling countryside.',
       imageUrl: 'https://picsum.photos/400/300?random=23',
-      author: 'Lucas Martinez',
-      date: '2024-03-28',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'New York, United States',
     },
     {
       id: 24,
@@ -266,9 +267,9 @@ export class BoardService {
       content:
         'Watch stunning sunsets on pristine beaches with golden sands and calm waters.',
       imageUrl: 'https://picsum.photos/400/300?random=24',
-      author: 'Sophia Garcia',
-      date: '2024-04-01',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'London, UK',
     },
     {
       id: 25,
@@ -277,9 +278,9 @@ export class BoardService {
       content:
         'Discover authentic local cuisine through vibrant street food markets.',
       imageUrl: 'https://picsum.photos/400/300?random=25',
-      author: 'Noah Thompson',
-      date: '2024-04-05',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Paris, France',
     },
     {
       id: 26,
@@ -288,9 +289,9 @@ export class BoardService {
       content:
         'Rejuvenate mind and body in peaceful settings with expert yoga instruction.',
       imageUrl: 'https://picsum.photos/400/300?random=26',
-      author: 'Olivia Brown',
-      date: '2024-04-08',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Berlin, Germany',
     },
     {
       id: 27,
@@ -299,9 +300,9 @@ export class BoardService {
       content:
         'Tour contemporary art galleries featuring works from emerging and established artists.',
       imageUrl: 'https://picsum.photos/400/300?random=27',
-      author: 'Ethan Davis',
-      date: '2024-04-12',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Tokyo, Japan',
     },
     {
       id: 28,
@@ -310,9 +311,9 @@ export class BoardService {
       content:
         'Dive into crystal-clear waters and explore vibrant coral reefs and marine life.',
       imageUrl: 'https://picsum.photos/400/300?random=28',
-      author: 'Ava Miller',
-      date: '2024-04-15',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Sydney, Australia',
     },
     {
       id: 29,
@@ -321,9 +322,9 @@ export class BoardService {
       content:
         'Tackle challenging trails and enjoy thrilling downhill rides through forests.',
       imageUrl: 'https://picsum.photos/400/300?random=29',
-      author: 'Mason Wilson',
-      date: '2024-04-18',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Toronto, Canada',
     },
     {
       id: 30,
@@ -332,9 +333,9 @@ export class BoardService {
       content:
         'Enjoy world-class jazz performances in an intimate outdoor setting.',
       imageUrl: 'https://picsum.photos/400/300?random=30',
-      author: 'Isabella Moore',
-      date: '2024-04-22',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Tel Aviv, Israel',
     },
     {
       id: 31,
@@ -343,9 +344,9 @@ export class BoardService {
       content:
         'Float above stunning landscapes and enjoy panoramic views at sunrise.',
       imageUrl: 'https://picsum.photos/400/300?random=31',
-      author: 'Liam Taylor',
-      date: '2024-04-25',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Jerusalem, Israel',
     },
     {
       id: 32,
@@ -354,9 +355,9 @@ export class BoardService {
       content:
         'Browse local organic produce and artisanal goods at community markets.',
       imageUrl: 'https://picsum.photos/400/300?random=32',
-      author: 'Charlotte Anderson',
-      date: '2024-04-28',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Haifa, Israel',
     },
     {
       id: 33,
@@ -365,9 +366,9 @@ export class BoardService {
       content:
         'Scale dramatic rock faces and test your skills on challenging routes.',
       imageUrl: 'https://picsum.photos/400/300?random=33',
-      author: 'James Thomas',
-      date: '2024-05-01',
       ownerId: 1,
+      postType: 'Events',
+      location: 'New York, United States',
     },
     {
       id: 34,
@@ -376,9 +377,9 @@ export class BoardService {
       content:
         'Stroll through themed gardens showcasing rare and exotic plant species.',
       imageUrl: 'https://picsum.photos/400/300?random=34',
-      author: 'Amelia Jackson',
-      date: '2024-05-05',
       ownerId: 2,
+      postType: 'Events',
+      location: 'London, UK',
     },
     {
       id: 35,
@@ -387,9 +388,9 @@ export class BoardService {
       content:
         'Sample dishes from renowned chefs and discover new culinary trends.',
       imageUrl: 'https://picsum.photos/400/300?random=35',
-      author: 'Benjamin White',
-      date: '2024-05-08',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Paris, France',
     },
     {
       id: 36,
@@ -398,9 +399,9 @@ export class BoardService {
       content:
         'Navigate coastal waters and explore hidden coves aboard a sailboat.',
       imageUrl: 'https://picsum.photos/400/300?random=36',
-      author: 'Mia Harris',
-      date: '2024-05-12',
       ownerId: 2,
+      postType: 'Travel',
+      location: 'Berlin, Germany',
     },
     {
       id: 37,
@@ -409,9 +410,9 @@ export class BoardService {
       content:
         'Learn professional photography techniques in stunning natural settings.',
       imageUrl: 'https://picsum.photos/400/300?random=37',
-      author: 'Alexander Martin',
-      date: '2024-05-15',
       ownerId: 1,
+      postType: 'Events',
+      location: 'Tokyo, Japan',
     },
     {
       id: 38,
@@ -420,9 +421,9 @@ export class BoardService {
       content:
         'Browse unique crafts and enjoy street performances at bustling night markets.',
       imageUrl: 'https://picsum.photos/400/300?random=38',
-      author: 'Harper Thompson',
-      date: '2024-05-18',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Sydney, Australia',
     },
     {
       id: 39,
@@ -431,9 +432,9 @@ export class BoardService {
       content:
         'Explore scenic trails on horseback through meadows and forest paths.',
       imageUrl: 'https://picsum.photos/400/300?random=39',
-      author: 'Elijah Garcia',
-      date: '2024-05-22',
       ownerId: 1,
+      postType: 'Travel',
+      location: 'Toronto, Canada',
     },
     {
       id: 40,
@@ -442,48 +443,13 @@ export class BoardService {
       content:
         'Enjoy captivating theatrical productions in historic performance venues.',
       imageUrl: 'https://picsum.photos/400/300?random=40',
-      author: 'Evelyn Martinez',
-      date: '2024-05-25',
       ownerId: 2,
+      postType: 'Events',
+      location: 'Tel Aviv, Israel',
     },
   ];
 
-  private postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
-
-  private cities: { name: string; lat: number; lng: number }[] = [
-    { name: 'Tel Aviv, Israel', lat: 32.0853, lng: 34.7818 },
-    { name: 'Jerusalem, Israel', lat: 31.7683, lng: 35.2137 },
-    { name: 'Haifa, Israel', lat: 32.794, lng: 34.9896 },
-    { name: 'New York, USA', lat: 40.7128, lng: -74.006 },
-    { name: 'London, UK', lat: 51.5074, lng: -0.1278 },
-    { name: 'Paris, France', lat: 48.8566, lng: 2.3522 },
-    { name: 'Berlin, Germany', lat: 52.52, lng: 13.405 },
-    { name: 'Tokyo, Japan', lat: 35.6762, lng: 139.6503 },
-    { name: 'Sydney, Australia', lat: -33.8688, lng: 151.2093 },
-    { name: 'Toronto, Canada', lat: 43.6532, lng: -79.3832 },
-  ];
-
-  constructor() {
-    // Assign a random city and type to posts
-    this.posts = this.posts.map((p) => ({
-      ...p,
-      location: p.location || this.randomCity(),
-      type: p.type || this.randomType(),
-    }));
-  }
-
-  private randomCity(): { lat: number; lng: number; name: string } {
-    const idx = Math.floor(Math.random() * this.cities.length);
-    const c = this.cities[idx];
-    return { lat: c.lat, lng: c.lng, name: c.name };
-  }
-
-  private randomType(): PostType {
-    const idx = Math.floor(Math.random() * this.postTypes.length);
-    return this.postTypes[idx];
-  }
-
-  getPosts(): Post[] {
-    return this.posts;
+  getPosts(): Observable<Post[]> {
+    return of(this.posts);
   }
 }
