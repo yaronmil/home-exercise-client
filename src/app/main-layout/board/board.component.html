@@ -1,5 +1,5 @@
 <div class="board-container">
-  <app-create-post></app-create-post>
+  <app-create-post (newPostCreated)="addNewPost($event)"></app-create-post>
   <app-post-search
     (locationSelected)="onLocationSelected($event)"
     (typeChanged)="onTypeChange($event)"

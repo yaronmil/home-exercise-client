@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
-import { Post } from '../board.component';
-import { EditCardDialogComponent } from '../edit-card-dialog/edit-card-dialog.component';
+import { PostModel } from '../models/post.model';
+import { EditPostDialogComponent } from '../edit-post-dialog/edit-post-dialog.component';
+import { BoardService } from '../board.service';
 
 @Component({
   selector: 'app-create-post',
@@ -14,11 +15,13 @@ import { EditCardDialogComponent } from '../edit-card-dialog/edit-card-dialog.co
   styleUrls: ['./create-post.component.scss'],
 })
 export class CreatePostComponent {
+  @Output() newPostCreated = new EventEmitter<PostModel>();
+
   constructor(private dialog: MatDialog, private userService: UserService) {}
 
   onCreatePost(): void {
     const currentUser = this.userService.getCurrentLoggedInUser();
-    const newPost: Post = {
+    const newPost: PostModel = {
       title: '',
       subtitle: '',
       content: '',
@@ -26,15 +29,14 @@ export class CreatePostComponent {
       ownerId: currentUser.userId,
     };
 
-    const dialogRef = this.dialog.open(EditCardDialogComponent, {
+    const dialogRef = this.dialog.open(EditPostDialogComponent, {
       width: '500px',
       data: { card: newPost },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('New post created:', result);
-        // TODO: Add the new post to the board
+        this.newPostCreated.emit(result);
       }
     });
   }

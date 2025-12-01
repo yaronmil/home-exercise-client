@@ -16,11 +16,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { Post, PostType } from '../board.component';
+import { PostModel, POST_TYPES } from '../models/post.model';
 import { LocationSearchComponent } from '../post-search/location-search/location-search.component';
 
 @Component({
-  selector: 'app-edit-card-dialog',
+  selector: 'app-edit-post-dialog',
   standalone: true,
   imports: [
     CommonModule,
@@ -33,18 +33,18 @@ import { LocationSearchComponent } from '../post-search/location-search/location
     MatSelectModule,
     LocationSearchComponent,
   ],
-  templateUrl: './edit-card-dialog.component.html',
-  styleUrls: ['./edit-card-dialog.component.scss'],
+  templateUrl: './edit-post-dialog.component.html',
+  styleUrls: ['./edit-post-dialog.component.scss'],
 })
-export class EditCardDialogComponent implements OnInit {
+export class EditPostDialogComponent implements OnInit {
   editForm: FormGroup;
   selectedLocation?: string;
-  postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
+  postTypes = POST_TYPES;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<EditCardDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { card: Post }
+    public dialogRef: MatDialogRef<EditPostDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { card: PostModel }
   ) {
     this.selectedLocation = data.card.location;
     this.editForm = this.fb.group({
@@ -54,7 +54,7 @@ export class EditCardDialogComponent implements OnInit {
       content: [data.card.content],
       imageUrl: [data.card.imageUrl],
       ownerId: [data.card.ownerId],
-      postType: [data.card.postType],
+      postType: [data.card.postType, Validators.required],
       location: [data.card.location],
     });
   }

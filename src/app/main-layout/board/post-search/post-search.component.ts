@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { PostType } from '../board.component';
+import { PostType, POST_TYPES } from '../models/post.model';
 import { LocationSearchComponent } from './location-search/location-search.component';
 
 @Component({
@@ -26,7 +26,7 @@ export class PostSearchComponent {
   @Output() typeChanged = new EventEmitter<PostType>();
 
   selectedType: PostType | 'all' = 'all';
-  postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
+  postTypes = POST_TYPES;
 
   onLocationSelected(address: {
     country?: string;

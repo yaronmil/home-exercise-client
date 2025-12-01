@@ -7,24 +7,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BoardService } from './board.service';
-import { EditCardDialogComponent } from './edit-card-dialog/edit-card-dialog.component';
+import { EditPostDialogComponent } from './edit-post-dialog/edit-post-dialog.component';
 import { UserService } from '../../services/user.service';
-import { LocationSearchComponent } from './post-search/location-search/location-search.component';
 import { PostSearchComponent } from './post-search/post-search.component';
 import { CreatePostComponent } from './create-post/create-post.component';
-
-export type PostType = 'Rent' | 'Buy & Sell' | 'Events' | 'Travel';
-
-export interface Post {
-  id?: number;
-  title: string;
-  subtitle: string;
-  content: string;
-  imageUrl: string;
-  ownerId: number;
-  postType?: PostType;
-  location?: string;
-}
+import { PostModel, PostType } from './models/post.model';
 
 @Component({
   selector: 'app-board',
@@ -44,8 +31,8 @@ export interface Post {
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  dataSource: Post[] = [];
-  displayedPosts: Post[] = [];
+  dataSource: PostModel[] = [];
+  displayedPosts: PostModel[] = [];
   currentUserId: number = 1;
   private selectedLocation?: {
     country?: string;
@@ -72,7 +59,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  isOwner(post: Post): boolean {
+  isOwner(post: PostModel): boolean {
     return post.ownerId === this.currentUserId;
   }
 
@@ -88,6 +75,17 @@ export class BoardComponent implements OnInit {
   onTypeChange(type: PostType): void {
     this.selectedType = type;
     this.applyFilters();
+  }
+  addNewPost($event: PostModel) {
+    this.boardService.createPost($event).subscribe({
+      next: (createdPost) => {
+        this.dataSource.push(createdPost);
+        this.applyFilters();
+      },
+      error: (error) => {
+        console.error('Error creating post:', error);
+      },
+    });
   }
 
   private applyFilters(): void {
@@ -171,25 +169,39 @@ export class BoardComponent implements OnInit {
     return encodeURIComponent(value);
   }
 
-  onEdit(card: Post): void {
-    const dialogRef = this.dialog.open(EditCardDialogComponent, {
+  onEdit(card: PostModel): void {
+    const dialogRef = this.dialog.open(EditPostDialogComponent, {
       width: '500px',
       data: { card },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      //if didnt clicked save
       if (result) {
-        // Update the card with the edited values
-        const index = this.dataSource.findIndex((p) => p.id === card.id);
-        if (index !== -1) {
-          this.dataSource[index] = result;
-        }
+        this.boardService.updatePost(result).subscribe({
+          next: () => {
+            Object.assign(card, result);
+            this.applyFilters();
+          },
+          error: (error) => {
+            console.error('Error updating post:', error);
+          },
+        });
       }
     });
   }
 
-  onDelete(card: Post): void {
-    console.log('Delete card:', card);
-    // TODO: Implement delete functionality
+  onDelete(card: PostModel): void {
+    if (confirm(`Are you sure you want to delete "${card.title}"?`)) {
+      this.boardService.deletePost(card.id as number).subscribe({
+        next: () => {
+          this.dataSource = this.dataSource.filter((p) => p.id !== card.id);
+          this.applyFilters();
+        },
+        error: (error) => {
+          console.error('Error deleting post:', error);
+        },
+      });
+    }
   }
 }
