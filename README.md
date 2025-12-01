@@ -8,7 +8,7 @@ An Angular 17 application for managing and filtering posts with location-based s
 
 - 📝 Create, edit, and delete posts
 - 🔍 Search posts by location using OpenStreetMap Nominatim API
-- 🏷️ Filter posts by type (Rent, Buy & Sell, Events, Travel)
+- 🏷️ Filter posts by type (Rent, Events, Travel)
 - 👤 User-based ownership and permissions
 - 🗺️ Location-based filtering with hierarchical matching (country/city/street)
 - 🎨 Material Design UI with Angular Material
