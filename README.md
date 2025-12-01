@@ -1,29 +1,115 @@
-# Client
+# Posts Board Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+An Angular 17 application for managing and filtering posts with location-based search and post type categorization.
 
-## Development server
+![Application Screenshot](image.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- 📝 Create, edit, and delete posts
+- 🔍 Search posts by location using OpenStreetMap Nominatim API
+- 🏷️ Filter posts by type (Rent, Buy & Sell, Events, Travel)
+- 👤 User-based ownership and permissions
+- 🗺️ Location-based filtering with hierarchical matching (country/city/street)
+- 🎨 Material Design UI with Angular Material
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Prerequisites
 
-## Build
+- Node.js (v18 or higher)
+- npm or yarn
+- Angular CLI (`npm install -g @angular/cli`)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Installation
 
-## Running unit tests
+1. Clone the repository:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+git clone https://github.com/yaronmil/home-exercise-client.git
+cd home-exercise-client/client
+```
 
-## Running end-to-end tests
+2. Install dependencies:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm install
+```
 
-## Further help
+## Running the Application
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Development Server
 
-![alt text](image.png)
+Start the development server:
+
+```bash
+npm start
+# or
+ng serve
+```
+
+Navigate to `http://localhost:4200/`. The application will automatically reload when you make changes to the source files.
+
+### Backend API
+
+The application expects a backend API running at `http://localhost:5178/api`. Make sure your backend server is running before starting the client.
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── main-layout/
+│   │   ├── board/                    # Main posts board
+│   │   │   ├── models/              # Post model and types
+│   │   │   ├── create-post/         # Create post component
+│   │   │   ├── edit-post-dialog/    # Edit post dialog
+│   │   │   ├── post-search/         # Search and filter components
+│   │   │   │   └── location-search/ # Location autocomplete
+│   │   │   ├── board.component.*    # Board container
+│   │   │   └── board.service.ts     # HTTP service
+│   │   ├── user-selector/           # User selection component
+│   │   └── main-layout.component.*  # Layout with toolbar
+│   ├── services/
+│   │   ├── auth.service.ts
+│   │   └── user.service.ts
+│   └── interceptors/
+│       └── error.interceptor.ts
+├── environments/
+│   ├── environment.ts
+│   └── environment.prod.ts
+└── assets/
+```
+
+## Available Scripts
+
+- `npm start` - Run development server
+- `npm test` - Execute unit tests via Karma
+- `ng build` - Build the project for production
+- `ng generate component component-name` - Generate a new component
+
+## Technologies Used
+
+- **Angular 17** - Standalone components with signals
+- **Angular Material 17** - UI components
+- **RxJS 7** - Reactive programming
+- **TypeScript** - Type-safe development
+- **Nominatim OpenStreetMap API** - Location search
+
+## API Endpoints
+
+The application communicates with the following endpoints:
+
+- `GET /api/posts` - Fetch all posts
+- `POST /api/posts` - Create a new post
+- `PUT /api/posts/:id` - Update a post
+- `DELETE /api/posts/:id` - Delete a post
+
+## Contributing
+
+1. Create a feature branch (`git checkout -b feature/amazing-feature`)
+2. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Push to the branch (`git push origin feature/amazing-feature`)
+4. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
