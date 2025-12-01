@@ -226,9 +226,229 @@ export class BoardService {
       date: '2024-03-18',
       ownerId: 2,
     },
+    {
+      id: 21,
+      title: 'Skiing Paradise',
+      subtitle: 'Winter Sports',
+      content:
+        'Hit the slopes and enjoy world-class skiing in pristine mountain resorts.',
+      imageUrl: 'https://picsum.photos/400/300?random=21',
+      author: 'Thomas Anderson',
+      date: '2024-03-22',
+      ownerId: 1,
+    },
+    {
+      id: 22,
+      title: 'Cultural Festival',
+      subtitle: 'Traditional Celebrations',
+      content:
+        'Experience vibrant cultural festivals showcasing local traditions and heritage.',
+      imageUrl: 'https://picsum.photos/400/300?random=22',
+      author: 'Emma Wilson',
+      date: '2024-03-25',
+      ownerId: 2,
+    },
+    {
+      id: 23,
+      title: 'Wine Valley',
+      subtitle: 'Vineyard Tours',
+      content:
+        'Explore scenic vineyards and taste exquisite wines in rolling countryside.',
+      imageUrl: 'https://picsum.photos/400/300?random=23',
+      author: 'Lucas Martinez',
+      date: '2024-03-28',
+      ownerId: 1,
+    },
+    {
+      id: 24,
+      title: 'Sunset Beach',
+      subtitle: 'Romantic Getaway',
+      content:
+        'Watch stunning sunsets on pristine beaches with golden sands and calm waters.',
+      imageUrl: 'https://picsum.photos/400/300?random=24',
+      author: 'Sophia Garcia',
+      date: '2024-04-01',
+      ownerId: 2,
+    },
+    {
+      id: 25,
+      title: 'Street Food Tour',
+      subtitle: 'Culinary Adventure',
+      content:
+        'Discover authentic local cuisine through vibrant street food markets.',
+      imageUrl: 'https://picsum.photos/400/300?random=25',
+      author: 'Noah Thompson',
+      date: '2024-04-05',
+      ownerId: 1,
+    },
+    {
+      id: 26,
+      title: 'Yoga Retreat',
+      subtitle: 'Wellness Journey',
+      content:
+        'Rejuvenate mind and body in peaceful settings with expert yoga instruction.',
+      imageUrl: 'https://picsum.photos/400/300?random=26',
+      author: 'Olivia Brown',
+      date: '2024-04-08',
+      ownerId: 2,
+    },
+    {
+      id: 27,
+      title: 'Art Gallery Walk',
+      subtitle: 'Creative Inspiration',
+      content:
+        'Tour contemporary art galleries featuring works from emerging and established artists.',
+      imageUrl: 'https://picsum.photos/400/300?random=27',
+      author: 'Ethan Davis',
+      date: '2024-04-12',
+      ownerId: 1,
+    },
+    {
+      id: 28,
+      title: 'Scuba Diving',
+      subtitle: 'Underwater Exploration',
+      content:
+        'Dive into crystal-clear waters and explore vibrant coral reefs and marine life.',
+      imageUrl: 'https://picsum.photos/400/300?random=28',
+      author: 'Ava Miller',
+      date: '2024-04-15',
+      ownerId: 2,
+    },
+    {
+      id: 29,
+      title: 'Mountain Biking',
+      subtitle: 'Adrenaline Rush',
+      content:
+        'Tackle challenging trails and enjoy thrilling downhill rides through forests.',
+      imageUrl: 'https://picsum.photos/400/300?random=29',
+      author: 'Mason Wilson',
+      date: '2024-04-18',
+      ownerId: 1,
+    },
+    {
+      id: 30,
+      title: 'Jazz Festival',
+      subtitle: 'Live Music',
+      content:
+        'Enjoy world-class jazz performances in an intimate outdoor setting.',
+      imageUrl: 'https://picsum.photos/400/300?random=30',
+      author: 'Isabella Moore',
+      date: '2024-04-22',
+      ownerId: 2,
+    },
+    {
+      id: 31,
+      title: 'Hot Air Balloon',
+      subtitle: 'Sky Adventure',
+      content:
+        'Float above stunning landscapes and enjoy panoramic views at sunrise.',
+      imageUrl: 'https://picsum.photos/400/300?random=31',
+      author: 'Liam Taylor',
+      date: '2024-04-25',
+      ownerId: 1,
+    },
+    {
+      id: 32,
+      title: 'Farmers Market',
+      subtitle: 'Fresh Produce',
+      content:
+        'Browse local organic produce and artisanal goods at community markets.',
+      imageUrl: 'https://picsum.photos/400/300?random=32',
+      author: 'Charlotte Anderson',
+      date: '2024-04-28',
+      ownerId: 2,
+    },
+    {
+      id: 33,
+      title: 'Rock Climbing',
+      subtitle: 'Vertical Challenge',
+      content:
+        'Scale dramatic rock faces and test your skills on challenging routes.',
+      imageUrl: 'https://picsum.photos/400/300?random=33',
+      author: 'James Thomas',
+      date: '2024-05-01',
+      ownerId: 1,
+    },
+    {
+      id: 34,
+      title: 'Botanical Garden',
+      subtitle: 'Flora Discovery',
+      content:
+        'Stroll through themed gardens showcasing rare and exotic plant species.',
+      imageUrl: 'https://picsum.photos/400/300?random=34',
+      author: 'Amelia Jackson',
+      date: '2024-05-05',
+      ownerId: 2,
+    },
+    {
+      id: 35,
+      title: 'Food Festival',
+      subtitle: 'Gourmet Experience',
+      content:
+        'Sample dishes from renowned chefs and discover new culinary trends.',
+      imageUrl: 'https://picsum.photos/400/300?random=35',
+      author: 'Benjamin White',
+      date: '2024-05-08',
+      ownerId: 1,
+    },
+    {
+      id: 36,
+      title: 'Sailing Adventure',
+      subtitle: 'Ocean Voyage',
+      content:
+        'Navigate coastal waters and explore hidden coves aboard a sailboat.',
+      imageUrl: 'https://picsum.photos/400/300?random=36',
+      author: 'Mia Harris',
+      date: '2024-05-12',
+      ownerId: 2,
+    },
+    {
+      id: 37,
+      title: 'Photography Workshop',
+      subtitle: 'Creative Skills',
+      content:
+        'Learn professional photography techniques in stunning natural settings.',
+      imageUrl: 'https://picsum.photos/400/300?random=37',
+      author: 'Alexander Martin',
+      date: '2024-05-15',
+      ownerId: 1,
+    },
+    {
+      id: 38,
+      title: 'Night Market',
+      subtitle: 'Evening Shopping',
+      content:
+        'Browse unique crafts and enjoy street performances at bustling night markets.',
+      imageUrl: 'https://picsum.photos/400/300?random=38',
+      author: 'Harper Thompson',
+      date: '2024-05-18',
+      ownerId: 2,
+    },
+    {
+      id: 39,
+      title: 'Horseback Riding',
+      subtitle: 'Trail Experience',
+      content:
+        'Explore scenic trails on horseback through meadows and forest paths.',
+      imageUrl: 'https://picsum.photos/400/300?random=39',
+      author: 'Elijah Garcia',
+      date: '2024-05-22',
+      ownerId: 1,
+    },
+    {
+      id: 40,
+      title: 'Theater Show',
+      subtitle: 'Live Performance',
+      content:
+        'Enjoy captivating theatrical productions in historic performance venues.',
+      imageUrl: 'https://picsum.photos/400/300?random=40',
+      author: 'Evelyn Martinez',
+      date: '2024-05-25',
+      ownerId: 2,
+    },
   ];
 
-  private postTypes: PostType[] = ['rent', 'buy & sell', 'events', 'travel'];
+  private postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
 
   private cities: { name: string; lat: number; lng: number }[] = [
     { name: 'Tel Aviv, Israel', lat: 32.0853, lng: 34.7818 },

@@ -28,10 +28,6 @@
       <img mat-card-image [src]="card.imageUrl" [alt]="card.title" />
       <mat-card-content>
         <p>{{ card.content }}</p>
-        <p class="card-meta">
-          <span class="author">By {{ card.author }}</span>
-          <span class="date">{{ card.date }}</span>
-        </p>
         <p class="card-meta" *ngIf="card.type">
           <span class="type">
             <mat-icon

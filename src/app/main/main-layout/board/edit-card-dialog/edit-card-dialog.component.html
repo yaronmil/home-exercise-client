@@ -28,16 +28,6 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Author</mat-label>
-      <input matInput formControlName="author" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Date</mat-label>
-      <input matInput formControlName="date" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Post Type</mat-label>
       <mat-select formControlName="type">
         <mat-option *ngFor="let type of postTypes" [value]="type">{{

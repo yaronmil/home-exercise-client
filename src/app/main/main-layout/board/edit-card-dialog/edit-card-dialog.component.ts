@@ -39,7 +39,7 @@ import { LocationSearchComponent } from '../location-search/location-search.comp
 export class EditCardDialogComponent implements OnInit {
   editForm: FormGroup;
   selectedLocation?: { lat: number; lng: number; name: string };
-  postTypes: PostType[] = ['rent', 'buy & sell', 'events', 'travel'];
+  postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
 
   constructor(
     private fb: FormBuilder,
@@ -53,8 +53,6 @@ export class EditCardDialogComponent implements OnInit {
       subtitle: [data.card.subtitle, Validators.required],
       content: [data.card.content],
       imageUrl: [data.card.imageUrl],
-      author: [data.card.author],
-      date: [data.card.date],
       ownerId: [data.card.ownerId],
       type: [data.card.type],
       location: [data.card.location],

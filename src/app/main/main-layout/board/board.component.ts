@@ -11,7 +11,7 @@ import { EditCardDialogComponent } from './edit-card-dialog/edit-card-dialog.com
 import { UserService } from '../../../services/user.service';
 import { LocationSearchComponent } from './location-search/location-search.component';
 
-export type PostType = 'rent' | 'buy & sell' | 'events' | 'travel';
+export type PostType = 'Rent' | 'Buy & Sell' | 'Events' | 'Travel';
 
 export interface Post {
   id: number;
@@ -51,7 +51,7 @@ export class BoardComponent implements OnInit {
   displayedPosts: Post[] = [];
   currentUserId: number = 1;
   selectedType: PostType | 'all' = 'all';
-  postTypes: PostType[] = ['rent', 'buy & sell', 'events', 'travel'];
+  postTypes: PostType[] = ['Rent', 'Buy & Sell', 'Events', 'Travel'];
   private selectedLocation?: {
     lat: number;
     lng: number;
